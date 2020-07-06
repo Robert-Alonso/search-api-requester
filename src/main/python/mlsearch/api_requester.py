@@ -157,6 +157,10 @@ class APIRequest:
         responses = github.search_repositories(query, "stars", "desc")
         results = []
 
+        # TODO: the content is filtered from init_idx after requesting all 
+        #       results, should be done in the beginning if possible
+        #       to improve performance (if necessary)
+
         if not self._is_valid_pagination(responses.totalCount):
             return
 
@@ -216,6 +220,11 @@ class APIRequest:
             if not self._is_valid_pagination(max_content):
                 return
 
+            # TODO: the content is filtered from init_idx after requesting all 
+            #       results, should be done in the beginning if possible
+            #       to improve performance (if necessary)
+            #       Looks like the api version is v0, how was the url obtained?
+
             content = content[
                 self.params["init_idx"] : min(
                     self.params["init_idx"] + self.params["count"], max_content
@@ -223,6 +232,8 @@ class APIRequest:
             ]
 
             for item in content:
+                # TODO: can also be summarized through a dict comprehension for
+                #       maintainability and readability
                 data = {
                     "title": self._unescape(item.get("paper_title", None)),
                     "description": self._unescape(
@@ -312,6 +323,8 @@ class APIRequest:
                 ):
                     continue
 
+                # TODO: can also be summarized through a dict comprehension for
+                #       maintainability and readability
                 data = {
                     "video_id": self._unescape(
                         item.get("id", dict({"videoId": None})).get(

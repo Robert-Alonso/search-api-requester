@@ -3,6 +3,7 @@ import os
 
 class Config(object):
     """Class for API Request configuration."""
+    # TODO: This could be managed with environment files and dotenv
 
     # Paper with code configuration
     PWC_USER_NAME = os.environ.get("PWC_USER_NAME") or ""
@@ -34,6 +35,7 @@ class Config(object):
     YOUTUBE_ORDER = os.environ.get("YOUTUBE_ORDER") or "relevance"
     YOUTUBE_SAFESEARCH = os.environ.get("YOUTUBE_SAFESEARCH") or "strict"
     YOUTUBE_PART = os.environ.get("YOUTUBE_PART") or "snippet"
+    # TODO: are there plans for updating/generalizing/extending these fixed keywords?
     YOUTUBE_FIX_KEYWORD = "machine learning"
     YOUTUBE_QUERY_FILTER = " " + YOUTUBE_FIX_KEYWORD + " -news"
     VALID_YOUTUBE_ORDER = [

@@ -1,11 +1,11 @@
 # MLSearch Libraries
 
-The mlsearch libraries are a collection of library that facilite as a wrapper over other repositories for fetching the data required for MLSearch Engine.
+The mlsearch libraries are a collection of libraries that work as a wrapper over other repositories for fetching the data required for MLSearch Engine.
 
-The package could be install by `python setup.py`.
+The package can be installed running `python setup.py` inside the project folder.
 
 <hr>
-<b>Standalone usage</b>
+<b>Standalone usage (CLI)</b>
 
 `mlsearch -q query -i start_index -c number_of_result -s source`
 
@@ -58,4 +58,18 @@ api_request = APIRequest(source, query,
 api_request.pwc_auth_info = ('user_name', 'password')
 api_request.github_acc_token = 'token'
 api_request.youtube_developer_key = 'your_key'
+```
+
+## Development setup
+
+Create a new virtual environment and install the required python libraries into it:
+
+<!-- TODO: confirm if the version used is python 3.7 -->
+<!-- TODO: would be nice to include an isort and black auto formatting pipeline 
+           through a makefile, as well as pylint and mypy checks -->
+
+```bash
+virtualenv --python=python3.7 venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```

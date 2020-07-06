@@ -2,12 +2,12 @@ import json
 
 def is_valid_parameters(event, param_names):
     """
-    Check whether the item in param_names exist in event dictionary.
+    Check whether the item in param_names exists in the event dictionary.
     
     :param  event:          Lambda event object.
     :param  param_names:    The list of the param names to be checked.
     
-    :retrun:                True if exist else False
+    :return:                True if exists else False
     """
     for param in param_names:
         if not param in event:

@@ -38,6 +38,8 @@ class Protocol():
             if param not in param_list:
                 raise AttributeError('{} is not a valid parameter.'.format(param))
 
+        # TODO: Why isn't the pwc, github, coursera, youtube hierarchy preserved?
+        #       instead of making everything flat and losing the parent reference
         self.title = kwargs.get('title', None)
         self.paper_published = kwargs.get('paper_published', None)
         self.paper_url = kwargs.get('paper_url', None)
@@ -51,7 +53,9 @@ class Protocol():
         self.description = kwargs.get('description', None)
         self.private = kwargs.get('private', None)
         self.fork = kwargs.get('fork', None)
-        self.updated_at = kwargs.get('updated_at', None)
+        # TODO: e.g. this update_at attribute referred to a github repo
+        #       but the reference was lost
+        self.updated_at = kwargs.get('updated_at', None) 
         self.stargazers_count = kwargs.get('stargazers_count', None)
         self.watchers_count = kwargs.get('watchers_count', None)
         self.language = kwargs.get('language', None)

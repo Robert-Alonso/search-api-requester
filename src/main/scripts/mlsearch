@@ -12,6 +12,10 @@ if "mlsearch" not in sys.modules:
 from mlsearch.api_requester import APIRequest
 from mlsearch import helper as hp
 
+# TODO: this argparsing would be better in a separate module for readibility
+#       or move the main function to another module such that this module
+#       is only responsible for CLI stuff
+
 ap = argparse.ArgumentParser()
 ap.add_argument("-q", "--query", required=True, help="Keyword for searching.")
 ap.add_argument("-i", "--init_idx", required=True, help="Initial index for pagination.")
@@ -19,6 +23,13 @@ ap.add_argument(
     "-c", "--count", required=True, help="Total number of results to be fetched."
 )
 ap.add_argument("-s", "--source", required=True, help="Source API to be looking for.")
+
+# TODO: Are cookies and timestamp required? Then update CLI example. 
+#       Why isn't timestamp calculated on the backend side?
+#       Also, looks like they're not being used later
+#       It would be important to document the attributes that are being used 
+#       to make everything consistent
+
 ap.add_argument("-ck", "--cookies", required=True, help="Cookies of current user.")
 ap.add_argument(
     "-tm", "--timestamp", required=True, help="Timestamp of requesting API."
@@ -64,7 +75,7 @@ def main(event):
             "timestamp",
             "y_next_page_token",
         ]
-        response_msg = hp.response("success", 200)
+        response_msg = hp.response("success", 200) # TODO: is this necessary?
         if hp.is_valid_parameters(event, param_names):
             params = hp.parse_parameters(event)
             if params.values():
@@ -75,6 +86,10 @@ def main(event):
                     params["count"],
                     params["y_next_page_token"],
                 )
+
+                # TODO: Loading APIRequest with extra info, couldn't be done earlier?
+                #       e.g. right after argparsing
+
                 if "pwc_user" in event and "pwc_password" in event:
                     api_request.pwc_auth_info = (
                         event["pwc_user"],
@@ -86,7 +101,13 @@ def main(event):
                     api_request.youtube_developer_key = event["y_dev_key"]
                 if "y_query_order" in event:
                     api_request.youtube_query_order = event["y_query_order"]
+
+                # TODO: Perform the request, should really be separate from the 
+                #       payload building section to improve readibility
+                #       and maintainability
+
                 data = api_request.fetch_data()
+
                 response_msg = hp.response(
                     message=data.get("content", ""),
                     status_code=data.get("response_code"),
@@ -113,6 +134,10 @@ def main(event):
 
 
 if __name__ == "__main__":
+
+    # TODO: can be summarized with a couple of loops to make it more readable
+    #       and maintainable 
+
     event = {
         "query": args["query"],
         "init_idx": args["init_idx"],
